@@ -1,37 +1,57 @@
 import io
 import re
+import os
 from string import punctuation
 
-'''
-The purpose of this class is to tokenize a list of sentences. After the process of tokenization,
-nltk has the ngrams function that returns a generator of n-grams given a tokenized sentence.
-'''
+
+class Token(object):
+    def __init__(self, str, is_punctuation=False):
+        self.str = str
+        self.is_punctuation = is_punctuation
+
+        self.is_delimiter = not str.strip()
+
+    def __str__(self):
+        if self.is_delimiter:
+            return '<DELIMITER>'
+        else:
+            return '<{}>'.format(self.str)
+
 
 class StreamingTokenizer(object):
 
-    def __init__(self, force_lower, emit_punctuation):
+    def __init__(self, force_lower, emit_punctuation, split_pattern='\s+'):
         self.force_lower = force_lower
-        self.emit_punctuation = emit_punctuation
+        self.emit_punctuation = emit_punctuation # not used yet
+        # compile the split pattern for speed
+        self.pattern = re.compile(split_pattern)
 
-    def tokenizer(self):
+    def tokenize_str(self, str):
+        """
+            Takes a string as input rather than a file
+        """
+        return self._tokenize(io.StringIO(str))
 
-        file = u"""
-        It was the best of times, it was the worst of times, it was the age of wisdom, it was the age 
-        of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season 
-        of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, 
-        we had everything before us, we had nothing before us, we were all going direct to Heaven, we were
-        all going direct the other way, in short, the period was so far like the present period, that 
-        some of its noisiest authorities insisted on its being received, for good or for evil, in the 
-        superlative degree of comparison only."""
+    def tokenize_file(self, filepath):
+        """
+            Take a file as input and return (yield) Token objects
+        """
 
-        for row in io.StringIO(file):
-            if self.emit_punctuation:
-                row = [''.join(c for c in row if c not in punctuation)]
-            if self.force_lower:
-                row = [word.lower() for word in row]
-            yield row
+        if not os.path.isfile(filepath):
+            raise "File path {} does not exist. Exiting...".format(filepath)
+        else:
+            with open(filepath, "r", encoding = "utf-8") as fd:
+                return self._tokenize(fd)
 
-dummy_tokenizer = StreamingTokenizer(force_lower=True, emit_punctuation=True)
-res = dummy_tokenizer.tokenizer()
-print(res)
-print(list(res))
+    def _tokenize(self, fd):
+        #
+        # Note: using the readline method assumes the text file has newlines
+        # if this assumption doesn't hold the file must be read char by char
+        #
+        # Note: one way to detect punctuation is to use two patterns, one
+        # of the user provided strip paterrn and one of string.punctuation
+        # then let regex tell you which pattern macthed, that's the most robust
+        # way to detect punct chars (and runs of chars like "!!" as a single token)
+        for line in fd:
+            for word in self.pattern.split(line):
+                yield Token(word)
