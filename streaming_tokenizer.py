@@ -40,8 +40,8 @@ class StreamingTokenizer(object):
         if not os.path.isfile(filepath):
             raise "File path {} does not exist. Exiting...".format(filepath)
         else:
-            with open(filepath, "r", encoding = "utf-8") as fd:
-                return self._tokenize(fd)
+            fd = open(filepath, "r").readlines()
+            return self._tokenize(fd)
 
     def _tokenize(self, fd):
         #

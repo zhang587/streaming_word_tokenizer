@@ -8,6 +8,7 @@ def test_edge_cases():
     for token in StreamingTokenizer(force_lower=True, emit_punctuation=True)\
         .tokenize_str(text):
         print(token)
+
 def test_text_string():
     text = '''
         It was the best of times,
@@ -43,4 +44,4 @@ def test_jkrowling():
         print(token)
 
 if __name__ == '__main__':
-    test_edge_cases()
+    test_text_string()
