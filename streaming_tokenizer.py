@@ -10,7 +10,7 @@ class Token(object):
         self.is_punctuation = is_punctuation
 
         self.is_delimiter = not str.strip()
-     
+
     def __str__(self):
         if self.is_delimiter:
             return '<DELIMITER>'
@@ -54,4 +54,6 @@ class StreamingTokenizer(object):
         # way to detect punct chars (and runs of chars like "!!" as a single token)
         for line in fd:
             for word in self.pattern.split(line):
+                if self.force_lower:
+                    word = word.lower()
                 yield Token(word)
