@@ -56,4 +56,6 @@ class StreamingTokenizer(object):
             for word in self.pattern.split(line):
                 if self.force_lower:
                     word = word.lower()
+                if self.emit_punctuation:
+                    word = word.translate(str.maketrans('', '', punctuation))
                 yield Token(word)
