@@ -43,6 +43,9 @@ class StreamingTokenizer(object):
             with open(filepath, "r", encoding = "utf-8") as fd:
                 yield from self._tokenize(fd)
 
+    def translate_str(self, word):
+        return word.translate(str.maketrans('', '', punctuation))
+
     def _tokenize(self, fd):
         #
         # Note: using the readline method assumes the text file has newlines
@@ -57,5 +60,5 @@ class StreamingTokenizer(object):
                 if self.force_lower:
                     word = word.lower()
                 if self.emit_punctuation:
-                    word = word.translate(str.maketrans('', '', punctuation))
+                    word = self.translate_str(word)
                 yield Token(word)
