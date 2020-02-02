@@ -43,15 +43,22 @@ class StreamingTokenizer(object):
             with open(filepath, "r", encoding = "utf-8") as fd:
                 yield from self._tokenize(fd)
 
+    def translate_str(self, word):
+        return word.translate(str.maketrans('', '', punctuation))
+
     def _tokenize(self, fd):
         #
         # Note: using the readline method assumes the text file has newlines
         # if this assumption doesn't hold the file must be read char by char
         #
         # Note: one way to detect punctuation is to use two patterns, one
-        # of the user provided strip paterrn and one of string.punctuation
-        # then let regex tell you which pattern macthed, that's the most robust
+        # of the user provided strip patern and one of string.punctuation
+        # then let regex tell you which pattern matched, that's the most robust
         # way to detect punct chars (and runs of chars like "!!" as a single token)
         for line in fd:
             for word in self.pattern.split(line):
+                if self.force_lower:
+                    word = word.lower()
+                if self.emit_punctuation:
+                    word = self.translate_str(word)
                 yield Token(word)

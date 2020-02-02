@@ -33,6 +33,16 @@ def test_text_string():
         .tokenize_str(text):
         print(token)
 
+def test_punctuation():
+    text = '''
+    In fact, it turns out that the best way to punctuate a text message may be by not punctuating it at all: 
+    Researchers at Binghamton University have found that ending your text with a period — full stop — may make 
+    you seem more insincere. !!
+    '''.strip()
+    for token in StreamingTokenizer(force_lower=True, emit_punctuation=True)\
+        .tokenize_str(text):
+        print(token)
+
 def test_dickens():
     for token in StreamingTokenizer(force_lower=True, emit_punctuation=True)\
         .tokenize_file('test_data/tale-of-two-cities.txt'):
@@ -44,4 +54,4 @@ def test_jkrowling():
         print(token)
 
 if __name__ == '__main__':
-    test_text_string()
+    test_punctuation()
