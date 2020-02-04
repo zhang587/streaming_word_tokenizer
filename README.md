@@ -22,7 +22,7 @@ New BSD. See LICENSE
 FUTURE
 ------
 
-  - Evaluate performance improvements using cython
+  - Evaluate performance improvements using cython and/or PyPy
   - TBD
 
 EXAMPLE
