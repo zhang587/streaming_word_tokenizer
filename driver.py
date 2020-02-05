@@ -4,7 +4,7 @@ from streaming_tokenizer import StreamingTokenizer
 # NOTE: this should be turned into pytests
 
 def test_edge_cases():
-    text = "Shay's dog talked in Chinese, which is un-American"
+    text = "Shay's dog talked in Chinese, which is un-American. She went to see Dr.Linda yesterday"
     for token in StreamingTokenizer(force_lower=True, omit_punctuation=False)\
         .tokenize_str(text):
         print(token)
