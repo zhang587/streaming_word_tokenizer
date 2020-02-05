@@ -5,26 +5,26 @@ from string import punctuation
 
 
 class Token(object):
-    def __init__(self, str):
+    def __init__(self, str, is_punctuation=True):
         self.str = str
-        self.is_punctuation = punctuation
+        self.is_punctuation = is_punctuation
         self.is_delimiter = not str.strip()
 
     def __str__(self):
         if self.is_delimiter:
             return '<DELIMITER>'
-        ## TODO: finish this part
-        if self.is_punctuation:
-            return '<PUNCTUATION>'
         else:
+            char_list = [char for char in self.str]
+            for c in char_list:
+                if c in punctuation:
+                    return '<{}>'.format(str(c))
             return '<{}>'.format(self.str)
 
 class StreamingTokenizer(object):
 
-    def __init__(self, force_lower, omit_punctuation, emit_punctuation, split_pattern='\s+'):
+    def __init__(self, force_lower, omit_punctuation, split_pattern='\s+'):
         self.force_lower = force_lower
-        self.omit_punctuation = omit_punctuation 
-        self.emit_punctuation = emit_punctuation
+        self.omit_punctuation = omit_punctuation
         # compile the split pattern for speed
         self.pattern = re.compile(split_pattern)
 
@@ -64,7 +64,4 @@ class StreamingTokenizer(object):
                     word = word.lower()
                 if self.omit_punctuation:
                     word = self.translate_str(word)
-                ## TODO: finish this part
-                if self.emit_punctuation:
-                    char_list = [char for char in word]
                 yield Token(word)

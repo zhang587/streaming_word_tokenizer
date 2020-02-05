@@ -5,7 +5,7 @@ from streaming_tokenizer import StreamingTokenizer
 
 def test_edge_cases():
     text = "Shay's dog talked in Chinese, which is un-American"
-    for token in StreamingTokenizer(force_lower=True, omit_punctuation=True, emit_punctuation=False)\
+    for token in StreamingTokenizer(force_lower=True, omit_punctuation=False)\
         .tokenize_str(text):
         print(token)
 
@@ -29,7 +29,7 @@ def test_text_string():
         its noisiest authorities insisted on its being received, for good or for
         evil, in the superlative degree of comparison only.
     '''.strip()
-    for token in StreamingTokenizer(force_lower=True, omit_punctuation=True, emit_punctuation=False)\
+    for token in StreamingTokenizer(force_lower=True, omit_punctuation=False)\
         .tokenize_str(text):
         print(token)
 
@@ -39,19 +39,19 @@ def test_punctuation():
     Researchers at Binghamton University have found that ending your text with a period — full stop — may make 
     you seem more insincere. !!
     '''.strip()
-    for token in StreamingTokenizer(force_lower=True, omit_punctuation=False, emit_punctuation=True)\
+    for token in StreamingTokenizer(force_lower=True, omit_punctuation=False)\
         .tokenize_str(text):
         print(token)
 
 def test_dickens():
-    for token in StreamingTokenizer(force_lower=True, omit_punctuation=True, emit_punctuation=False)\
+    for token in StreamingTokenizer(force_lower=True, omit_punctuation=False)\
         .tokenize_file('test_data/tale-of-two-cities.txt'):
         print(token)
 
 def test_jkrowling():
-    for token in StreamingTokenizer(force_lower=True, omit_punctuation=True, emit_punctuation=False)\
+    for token in StreamingTokenizer(force_lower=True, omit_punctuation=False)\
         .tokenize_file('test_data/the-philosophers-stone.txt'):
         print(token)
 
 if __name__ == '__main__':
-    test_punctuation()
+    test_edge_cases()
