@@ -14,11 +14,9 @@ class Token(object):
         if self.is_delimiter:
             return '<DELIMITER>'
         else:
-            char_list = [char for char in self.str]
-            for c in char_list:
-                if c in punctuation:
-                    token_list = list(self.str.partition(c))
-                    print(token_list)
+            token_list = re.findall(r"[\w]+|[^\s\w]", self.str)
+            for i in token_list:
+                print(i)
         return '<{}>'.format(self.str)
 
 
