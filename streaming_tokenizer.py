@@ -17,8 +17,10 @@ class Token(object):
             char_list = [char for char in self.str]
             for c in char_list:
                 if c in punctuation:
-                    return '<{}>'.format(str(c))
-            return '<{}>'.format(self.str)
+                    token_list = list(self.str.partition(c))
+                    print(token_list)
+        return '<{}>'.format(self.str)
+
 
 class StreamingTokenizer(object):
 
