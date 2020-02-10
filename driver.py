@@ -1,6 +1,6 @@
 
 from streaming_tokenizer import StreamingTokenizer
-
+import time
 # NOTE: this should be turned into pytests
 
 def test_edge_cases():
@@ -54,4 +54,8 @@ def test_jkrowling():
         print(token)
 
 if __name__ == '__main__':
-    test_edge_cases()
+    start_time = time.time()
+    test_jkrowling()
+    end_time = time.time()
+    execution_time = end_time-start_time
+    print("execution time", execution_time)

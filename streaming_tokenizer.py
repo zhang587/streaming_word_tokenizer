@@ -46,7 +46,6 @@ class StreamingTokenizer(object):
                 yield from self._tokenize(fd)
 
     def translate_str(self, word):
-        
         return word.translate(str.maketrans('', '', punctuation))
 
     def _tokenize(self, fd):
