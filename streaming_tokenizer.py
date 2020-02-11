@@ -42,7 +42,7 @@ class StreamingTokenizer(object):
         if not os.path.isfile(filepath):
             raise "File path {} does not exist. Exiting...".format(filepath)
         else:
-            with open(filepath, "r", encoding = "utf-8") as fd:
+            with open(filepath, "r", encoding="utf-8") as fd:
                 yield from self._tokenize(fd)
 
     def translate_str(self, word):
