@@ -28,6 +28,13 @@ FUTURE
 EXAMPLE
 -------
 
+BENCHMARK RESULTS
+-------
+
+I tested the following three implementations of the algorithm:
+* CPython: The pure Python implementation running in the standard CPython interpreter
+* CPython + Cython: The Cython implementation running in the standard CPython interpreter
+* PyPy: The pure Python implementation running in the PyPy interpreter
 DEPENDENCIES
 ------------
 
