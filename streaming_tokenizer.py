@@ -1,3 +1,4 @@
+#!/usr/bin/env pypy
 import io
 import re
 import os
